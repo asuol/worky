@@ -1,0 +1,37 @@
+{% extends "page.html" %}
+
+{% block page_title %} - Completed tasks{% endblock %}
+
+{% block header_title %}Completed Tasks{% endblock %}
+
+{% block header_buttons %}
+				<a href="/createForm" class="action" id="{{model.create_task_button_id}}">Create Task</a>
+	        	<a href="/" class="action" id="{{model.show_active_button_id}}">Show Active</a>
+{% endblock %}
+
+{% block page_body %}
+		{% if not model.completed_tasks %}
+        <div class="emptyTable">
+        	<h1>Nothing accomplished yet!</h1>
+        </div>
+        {% else %}
+       <table id="tasks">
+           <tr>
+				<th class="description">Description</th>
+				<th>Due Date</th>
+				<th>Created</th>
+				<th>Last Update</th>
+				<th>Completed By</th>
+			</tr>
+			{% for row in model.completed_tasks if model.completed_tasks %}
+			<tr>
+				<td>{{row.Tasks.description}}</td>
+				<td>{{row.Tasks.due_date}}</td>
+				<td>{{row.Tasks.created_date}}</td>
+				<td>{{row.Tasks.last_updated}}</td>
+				<td>{{row.Completed.completed_by}}</td>
+			</tr>
+	        {% endfor %}
+        </table>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "form.html" %}
+
+{% block page_title %} - Update task{% endblock %}
+
+{% block header_title %}Update task{% endblock %}
+
+{% block task_id %}<input type="hidden" name="id" value="{{model.task.id}}">{% endblock %}
+
+{% block description_value %}{{model.task.description}}{% endblock %}
+
+{% block submit_button_text %}Update{% endblock %}

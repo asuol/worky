@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% macro input_property_macro() -%}
+    {% block input_property %}{% endblock %}
+{%- endmacro %}
+
+{% block page_body %}
+		<div class="formWrapper">
+			<form class="userForm" action="{{model.form_action}}" id="inputForm">
+			  {% block task_id %}{% endblock %}
+			  <p>Description<p><textarea name="description" rows="10" cols="30"
+                  id="{{model.description_area_id}}" required {{
+                  input_property_macro() }}>{% block description_value %}{% endblock %}</textarea><br>
+			  <p>Due Date</p><input type="date" name="dueDate"
+              id="{{model.due_date_input_id}}"
+              value="{{model.default_due_date}}" required {{
+              input_property_macro() }}>
+			</form>
+			
+			<div class="formButtons">
+	        	<a href="/" class="actionAbort">Cancel</a>
+	        	<input type="submit" form="inputForm" class="action" id="{{model.submit_button_id}}" value="{% block submit_button_text %}{% endblock %}">
+        	</div>
+        </div>
+{% endblock %}

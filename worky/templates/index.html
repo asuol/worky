@@ -1,0 +1,48 @@
+{% extends "page.html" %}
+
+{% block header_title %}TODO{% endblock %}
+
+{% block header_buttons %}
+				<a href="/createForm" class="action" id="{{model.create_task_button_id}}">Create Task</a>
+	        	<a href="/completed" class="action" id="{{model.show_completed_button_id}}">Show Completed</a>
+{% endblock %}
+
+{% block page_body %}        
+        {% if not model.overdue_tasks and not model.active_tasks %}
+    	<div class="emptyTable">
+    		<h1>Nothing left to do!</h1>
+    	</div>
+        {% else %}
+       <table id="{{model.task_table_id}}">
+           <tr>
+				<th class="description">Description</th>
+				<th>Due Date</th>
+				<th>Created (UTC)</th>
+				<th>Last Update (UTC)</th>
+				<th>Update Task</th>
+				<th>Delete Task</th>
+				<th>Complete Task</th>
+			</tr>
+			
+			{% macro insertRow(task, class='') -%}
+		    <tr>
+				<td>{{task.description}}</td>
+				<td{{class}}>{{task.due_date}}</td>
+				<td>{{task.created_date}}</td>
+				<td>{{task.last_updated}}</td>
+				<td><a href="/updateForm?id={{task.id}}" class="rowAction">Update</a></td>
+				<td><a href="/deleteForm?id={{task.id}}" class="rowAction">Delete</a></td>
+				<td><a href="/completeForm?id={{task.id}}" class="rowAction">Complete</a></td>
+			</tr>
+			{%- endmacro %}
+
+			{% for task in model.overdue_tasks if model.overdue_tasks %}
+				{{ insertRow(task, ' class=overdue') }}
+	        {% endfor %}
+			
+			{% for task in model.active_tasks if model.active_tasks %}
+				{{ insertRow(task) }}
+	        {% endfor %}
+        </table>
+        {% endif %}
+{% endblock %}

@@ -1,0 +1,21 @@
+<html>
+
+    <head>
+        <title>Worky{% block page_title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+
+    <body>
+        <div id="header">
+        	<div id="title">
+            	<h1>{% block header_title %}{% endblock %}</h1>
+            </div>
+            {% block header_body %}
+            {% endblock %}
+        </div>
+        
+        {% block page_body %}
+    	{% endblock %}        
+    </body>
+
+</html>
