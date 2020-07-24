@@ -1,5 +1,8 @@
 **/__pycache__
 .env
-.coverage
+.coverage*
 **/*.worky
+**/*.pyc
 selenium
+coverage_report.xml
+test_reports.xml

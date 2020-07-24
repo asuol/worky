@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/gzhsuol/worky/badges/master/pipeline.svg)](https://gitlab.com/gzhsuol/worky/-/commits/master) [![coverage report](https://gitlab.com/gzhsuol/worky/badges/master/coverage.svg)](https://gitlab.com/gzhsuol/worky/-/commits/master)
+
 # Worky
 This is a TODO application that covers my specific needs, namely:
 - It is a standalone application that can be deployed locally anywhere where python is installed and a browser is available (no internet required)
@@ -107,7 +109,15 @@ When a task is complete it is moved from the TODO table to the Completed table, 
 
 ## Running the testsuite
 Should you want to run the tests or ensure that everything still works after a change on the source code, you can run the testsuite.
-To execute the end-to-end tests and gather the code coverage metrics run `python3 build.py --run-tests`.
+To execute the unit and end-to-end tests and gather the code coverage metrics using your current chrome installation, download the selenium chrome driver and place it at `selenium/chromedriver.zip` and run `python3 build.py --run-tests-local`.
+If you do not have chrome installed you can also use the `selenium/standalone-chrome` docker image to accomplish the same thing:
+
+```
+docker run -d --rm --name "worky-selenium" --network="host" selenium/standalone-chrome:latest
+python3 build.py --run-tests-remote
+docker stop worky-selenium
+```
+
 To lint the code run `python3 build.py --lint`
 
 ## TODO

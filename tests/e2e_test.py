@@ -23,8 +23,10 @@ SOFTWARE.
 """
 
 import pytest
+from pytest_cov.embed import cleanup_on_sigterm
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from worky import server
 from worky.storage import Storage
 from multiprocessing import Process
@@ -35,8 +37,11 @@ from worky.models.confirm_form_model import ConfirmFormModel
 from worky.models.completed_model import CompletedModel
 from tests.utils import date_utils
 from tests.utils.e2e_utils import E2eUtils
+import os
 
-server_url = "localhost:5000"
+host_ip = os.getenv("SERVER_IP", "127.0.0.1")
+
+server_url = "http://%s:5000" % host_ip
 
 test_task_description = "Sample task"
 
@@ -55,8 +60,10 @@ def deploy_server(tmpdir):
     db_path = str(tmpdir.join("test.worky"))
 
     server.app.config['STORAGE'] = Storage(db_path)
+    server_process = Process(target=server.app.run,
+                             args=(host_ip,))
 
-    server_process = Process(target=server.app.run)
+    cleanup_on_sigterm()
 
     server_process.start()
 
@@ -68,7 +75,14 @@ def deploy_server(tmpdir):
 
 @pytest.fixture
 def driver_init(request):
-    chrome_driver = webdriver.Chrome()
+
+    if os.getenv("REMOTE_SELENIUM") is None:
+        chrome_driver = webdriver.Chrome()
+    else:
+        chrome_driver = webdriver.Remote(
+            command_executor='http://%s:4444/wd/hub' %
+            (os.getenv("REMOTE_SELENIUM")),
+            desired_capabilities=DesiredCapabilities.CHROME)
 
     request.cls.driver = chrome_driver
     request.cls.e2e_utils = E2eUtils(chrome_driver)

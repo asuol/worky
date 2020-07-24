@@ -27,7 +27,7 @@ from pathlib import Path
 import subprocess
 import zipfile
 import tarfile
-from os import mkdir, chmod
+from os import mkdir, chmod, environ
 from shutil import rmtree
 import sys
 
@@ -94,10 +94,29 @@ def package(platform):
         rmtree(DEPS_DIR)
 
 
-def run_tests():
+def _run_tests():
+    subprocess.check_call(['pytest', '--cov=worky', '--cov-report=term',
+                           '--cov-report=xml:coverage_report.xml',
+                           '-o', 'junit_family=xunit2',
+                           '--junitxml=test_reports.xml', 'tests'])
+
+
+def run_tests_local():
     install_selenium()
 
-    subprocess.check_call(['pytest', '--cov=worky', 'tests'])
+    _run_tests()
+
+
+def run_tests_remote():
+    environ["REMOTE_SELENIUM"] = "localhost"
+
+    _run_tests()
+
+
+def run_tests_ci():
+    environ["REMOTE_SELENIUM"] = "selenium__standalone-chrome"
+
+    _run_tests()
 
 
 def run_flake8():
@@ -118,8 +137,15 @@ if __name__ == '__main__':
     options.add_argument("--offline-install-win64", help="Install worky using "
                          "the pre-packed dependencies at worky_deps_%s.tar.gz"
                          % WIN_PLATFORM, action="store_true")
-    options.add_argument("--run-tests", help="Run the testsuite and show "
-                         "coverage metrics", action="store_true")
+    options.add_argument("--run-tests-local", help="Run the testsuite and "
+                         "show coverage metrics. Requires chrome to be "
+                         "installed", action="store_true")
+    options.add_argument("--run-tests-remote", help="Run the testsuite and "
+                         "show coverage metrics. Requires selenium server "
+                         "and chrome to be installed", action="store_true")
+    options.add_argument("--run-tests-ci", help="Run the testsuite and "
+                         "show coverage metrics. To be used by gitlab CI",
+                         action="store_true")
     options.add_argument("--package-linux64", help="Download and package the "
                          "project dependencies for linux 64bit",
                          action="store_true")
@@ -138,8 +164,12 @@ if __name__ == '__main__':
             offline_install(LINUX64_PLATFORM)
         elif args.offline_install_win64:
             offline_install(WIN_PLATFORM)
-        elif args.run_tests:
-            run_tests()
+        elif args.run_tests_local:
+            run_tests_local()
+        elif args.run_tests_remote:
+            run_tests_remote()
+        elif args.run_tests_ci:
+            run_tests_ci()
         elif args.package_linux64:
             package(LINUX64_PLATFORM)
         elif args.package_win64:

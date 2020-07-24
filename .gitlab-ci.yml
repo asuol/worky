@@ -1,7 +1,7 @@
-# This file is a template, and might need editing before it works on your project.
-# Official language image. Look for the different tagged releases at:
-# https://hub.docker.com/r/library/python/tags/
 image: python:3.5
+
+stages:
+  - test
 
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
@@ -18,13 +18,23 @@ cache:
     - .cache/pip
     - .env/
 
-before_script:
-  - python -m venv .env
-  - source .env/bin/activate
-  - python build.py --install
-
 test:
+  stage: test
+
+  services:
+    - name: selenium/standalone-chrome
+
+  before_script:
+    - python -m venv .env
+    - source .env/bin/activate
+    - python build.py --install
+
   script:
     - python build.py --lint
-    - python build.py --run-tests
+    - export SERVER_IP=$(cat /etc/hosts | grep "$(hostname)$" | awk '{print $1}')
+    - python build.py --run-tests-ci
 
+  artifacts:
+    reports:
+        junit: test_reports.xml
+        cobertura: coverage_report.xml
