@@ -26,7 +26,7 @@
 			
 			{% macro insertRow(task, class='') -%}
 		    <tr>
-				<td>{{task.description}}</td>
+				<td class="description">{{task.description}}</td>
 				<td{{class}}>{{task.due_date}}</td>
 				<td>{{task.created_date}}</td>
 				<td>{{task.last_updated}}</td>

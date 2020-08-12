@@ -1,66 +1,66 @@
 #header {
-	height: 10%;
+    height: 10%;
 }
 
 #title {
     text-align: center;
-	width: 100%;
-	margin-right: -30%;
-	float: left;
+    width: 100%;
+    margin-right: -30%;
+    float: left;
 }
 
 #buttons {
-	display:flex;
-	justify-content:flex-end;
-	align-items:center;
-	width:30%;
-	height:100%;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    width:30%;
+    height:100%;
 }
 
 .action, .actionAbort, .rowAction {
-	text-decoration: none;
+    text-decoration: none;
     padding: 10px;
     font-weight: bold;
     cursor:pointer;
     border: 0;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .action, .actionAbort {
-	float: right;
-	margin-left: 1em;
+    float: right;
+    margin-left: 1em;
 }
 
 .action {
-	background-color: red;
-	color: white;
+    background-color: red;
+    color: white;
 }
 
 .rowAction {
-	background-color: orange;
-	color: white;
+    background-color: orange;
+    color: white;
 }
 
 .rowAction:hover {
-	background-color: #4CAF50;
+    background-color: #4CAF50;
 }
 
 .action:hover {
-	background-color: orange;
+    background-color: orange;
 }
 
 .actionAbort {
-	background-color: #4CAF50;
-	color: white;
+    background-color: #4CAF50;
+    color: white;
 }
 
 #tasks {
     border-collapse: collapse;
     width: 100%;
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	table-layout: auto;
+    font-size: 16px;
+    table-layout: auto;
 }
 
 #tasks td, #tasks th {
@@ -71,7 +71,7 @@
 }
 
 #tasks td {
-	white-space: nowrap;
+    white-space: pre-wrap;
 }
 
 #tasks tr:nth-child(even){background-color: #f2f2f2;}
@@ -85,39 +85,43 @@
     color: white;
 }
 
+#tasks td.description {
+    text-align: left;
+}
+
 td.overdue {
-	background-color: red;
+    background-color: red;
 }
 
 th.description {
-	width: 100%;
+    width: 100%;
 }
 
 .formWrapper {
-	height: 90%;
-	width: 50%;
-	margin: 0 auto;
-	display: flex;
+    height: 90%;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
     justify-content: center;
     flex-direction: column;
 }
 
 .userForm {
-	text-align: center;
-	padding: 3em 0;
-	border: 1px dashed black;
+    text-align: center;
+    padding: 3em 0;
+    border: 1px dashed black;
 }
 
 .formButtons {
-	display:flex;
-	justify-content: center;
-	align-items:center;
-	width: 100%;
-	height: 5em;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+    height: 5em;
 }
 
 .emptyTable {
-	display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
