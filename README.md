@@ -1,4 +1,4 @@
-[![pipeline status](https://gitlab.com/gzhsuol/worky/badges/master/pipeline.svg)](https://gitlab.com/gzhsuol/worky/-/commits/master) [![coverage report](https://gitlab.com/gzhsuol/worky/badges/master/coverage.svg)](https://gitlab.com/gzhsuol/worky/-/commits/master)
+[![pipeline status](https://gitlab.com/gzhsuol/worky/badges/master/pipeline.svg)](https://gitlab.com/gzhsuol/worky/-/jobs) [![coverage report](https://gitlab.com/gzhsuol/worky/badges/master/coverage.svg)](https://gitlab.com/gzhsuol/worky/-/jobs)
 
 # Worky
 This is a TODO application that covers my specific needs, namely:
