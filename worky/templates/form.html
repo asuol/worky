@@ -8,7 +8,7 @@
 		<div class="formWrapper">
 			<form class="userForm" action="{{model.form_action}}" id="inputForm">
 			  {% block task_id %}{% endblock %}
-			  <p>Description<p><textarea name="description" rows="10" cols="30"
+			  <p>Description<p><textarea class="formTextArea" name="description" rows="10" cols="30"
                   id="{{model.description_area_id}}" required {{
                   input_property_macro() }}>{% block description_value %}{% endblock %}</textarea><br>
 			  <p>Due Date</p><input type="date" name="dueDate"
