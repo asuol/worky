@@ -16,14 +16,14 @@ This is a TODO application that covers my specific needs, namely:
 ## Technologies
 
 - Python was chosen for the backend as it can work anywhere since it is the scripting language of the day and is likely installed already where needed. If not, it's easy to install and there are portable versions which do not even require admin credentials (no IT drama)
-- The frontend is HTML5 meaning that any (!?) browser can show it (any system will have access to a browser somewhere - famous last words?)
+- The frontend is HTML5 meaning that any modern browser can show it (any system will have access to a browser somewhere - famous last words?)
 - SQLite was chosen to simplify backups (no database exports required, just save it as any other file) and deployments (it's just a file!)
 - Having the data on a single file means you can easily have more files, so you can compartmentalize tasks by spreading them through several files and selecting which one you want to use at any given time based on the project at hand
 
 ## User manual
 
 Just clone (or download if your machine does not have git or internet) this repository and start creating a new workfile or load an existing one. 
-Launch the application with a given file with the `.worky` extension. Use separate `*.worky`files for differente projects as needed.
+Launch the application with a given file with the `.worky` extension. Use separate `.worky` files for different projects as needed.
 
 ##### Preparing the environment
 
@@ -31,7 +31,11 @@ Make sure that at least python v3.5 is installed and in your system path, and th
 
 ```
 python3 -m venv .env
+source .env/bin/activate # On Linux
+.env\Scripts\activate.bat # On Windows
 ```
+
+I have chosen to use Venv instead of Pipenv as Venv comes standard with Python, and since I deal with machines with no Internet access I prefer to have as little dependencies as possible.
 
 If the system has access to the Internet then run
 
@@ -125,5 +129,5 @@ To lint the code run `python3 build.py --lint`
 TODO loop!! This is the section where tasks that need to be done are shown so tasks to be done can be shown.
 At this time no changes are envisaged. 
 Potential future updates may include:
-- TBD
+- Show the update history for each task
 
