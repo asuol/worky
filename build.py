@@ -178,5 +178,7 @@ if __name__ == '__main__':
             run_flake8()
         else:
             arg_parser.print_help()
+    except subprocess.CalledProcessError as e:
+        exit(e.returncode)
     except Exception as e:
         print(e)
