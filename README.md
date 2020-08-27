@@ -95,6 +95,22 @@ optional arguments:
   -p, --port   port where the worky webpage will be served. Default is 5000
 ```
 
+To launch from a script (which can be tricky due to the venv) you can use the following templates:
+
+Linux `bash` script
+```
+cd /PATH/TO/WORKY/CLONE
+
+bash --rcfile .env/bin/activate -c "python3 worky.py <ARGS>"
+```
+
+Windows `batch` script
+```
+cd \PATH\TO\WORKY\CLONE
+
+cmd /k ".env\Scripts\activate & python worky.py <ARGS>"
+```
+
 ## Demonstration
 
 The initial screen from a new workfile looks as expected. Click on create task and it redirects to a form page. 
