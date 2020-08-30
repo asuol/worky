@@ -116,12 +116,13 @@ class Tests():
 
         desc_area_id = CreateTaskModel.description_area_id
 
-        self.e2e_utils.send_keys_to_element_by_id(desc_area_id,
-                                                  test_task_description)
+        self.e2e_utils.wait_and_send_keys_to_element_by_id(
+            desc_area_id, test_task_description)
 
-        self.e2e_utils.click_element_by_id(CreateTaskModel.submit_button_id)
+        desc = self.e2e_utils.wait_and_get_element_by_id(
+            desc_area_id)
 
-        task_table_id = IndexModel.task_table_id
+        assert desc.get_property("value") == test_task_description
 
         self.e2e_utils.wait_and_click_element_by_id(
             CreateTaskModel.submit_button_id)
@@ -158,13 +159,25 @@ class Tests():
 
         due_date_input_id = CreateTaskModel.due_date_input_id
 
-        self.e2e_utils.send_keys_to_element_by_id(due_date_input_id,
-                                                  task_due_date)
+        self.e2e_utils.wait_and_send_keys_to_element_by_id(
+            due_date_input_id, task_due_date)
+
+        due_date = self.e2e_utils.wait_and_get_element_by_id(
+            due_date_input_id)
+
+        fmt_due_date = date_utils.datepicker_to_due_date_format(task_due_date)
+
+        assert due_date.get_property("value") == fmt_due_date
 
         description_area_id = CreateTaskModel.description_area_id
 
-        self.e2e_utils.send_keys_to_element_by_id(description_area_id,
-                                                  test_task_description)
+        self.e2e_utils.wait_and_send_keys_to_element_by_id(
+            description_area_id, test_task_description)
+
+        desc = self.e2e_utils.wait_and_get_element_by_id(
+            description_area_id)
+
+        assert desc.get_property("value") == test_task_description
 
         self.e2e_utils.wait_and_click_element_by_id(
             CreateTaskModel.submit_button_id)
@@ -186,8 +199,8 @@ class Tests():
 
         updated_description = "Updated description"
 
-        self.e2e_utils.send_keys_to_element_by_id(desc_area_id,
-                                                  updated_description)
+        self.e2e_utils.wait_and_send_keys_to_element_by_id(
+            desc_area_id, updated_description)
 
         due_date_id = UpdateTaskModel.due_date_input_id
 
@@ -197,8 +210,8 @@ class Tests():
 
         cur_date = date_utils.datepicker_current_date()
 
-        self.e2e_utils.send_keys_to_element_by_id(due_date_id,
-                                                  cur_date)
+        self.e2e_utils.wait_and_send_keys_to_element_by_id(
+            due_date_id, cur_date)
 
         self.e2e_utils.wait_and_click_element_by_id(
             UpdateTaskModel.submit_button_id)

@@ -23,3 +23,8 @@ def date_from_today(days_to_add):
 
 def datepicker_date_from_today(days_to_add):
     return _date_from_today(days_to_add).strftime(datepicker_date_format)
+
+
+def datepicker_to_due_date_format(datepicker_date):
+    return datetime.strptime(datepicker_date,
+                             datepicker_date_format).strftime(due_date_format)

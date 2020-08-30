@@ -1,6 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
+import time
 
 
 class E2eUtils():
@@ -50,9 +51,10 @@ class E2eUtils():
 
         element.click()
 
-    def send_keys_to_element_by_id(self, elem_id, keys):
+    def wait_and_send_keys_to_element_by_id(self, elem_id, keys):
         """
-        Send keys to the given element id
+        Wait for the given element id to be visible before sending keys to it
+        (wait up to 30 seconds)
 
         Parameters
         ----------
@@ -63,7 +65,22 @@ class E2eUtils():
         keys : str
             the keys to send
         """
+        wait = WebDriverWait(self.driver, 30)
 
-        element = self.driver.find_element_by_id(elem_id)
+        element = wait.until(ec.visibility_of_element_located(
+            (By.ID, elem_id)))
 
-        element.send_keys(keys)
+        " ensure the element is focused "
+        element.clear()
+
+        """
+        the webdriver can be slow, so we split the keys into 4-char chunks as
+        that is the length of the year field of a datepicker, which needs to
+        be writen as a single chunk
+        """
+        chunks = [keys[i:i+4] for i in range(0, len(keys), 4)]
+
+        for c in chunks:
+            " allow time for the webdriver to prepare for the keys "
+            time.sleep(1)
+            element.send_keys(c)
