@@ -106,14 +106,15 @@ class Tests():
     def test_create_task(self):
         self.driver.get(server_url)
 
-        self.e2e_utils.click_element_by_id(IndexModel.create_task_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            IndexModel.create_task_button_id)
 
         due_date = self.e2e_utils.wait_and_get_element_by_id(
             CreateTaskModel.due_date_input_id)
 
         assert due_date.get_property("value") == date_utils.date_from_today(14)
 
-        desc_area_id = CreateTaskModel.description_area_id,
+        desc_area_id = CreateTaskModel.description_area_id
 
         self.e2e_utils.send_keys_to_element_by_id(desc_area_id,
                                                   test_task_description)
@@ -122,7 +123,11 @@ class Tests():
 
         task_table_id = IndexModel.task_table_id
 
-        table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            CreateTaskModel.submit_button_id)
+
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
@@ -135,14 +140,16 @@ class Tests():
         assert first_row_desc == test_task_description
 
     def _click_task_button(self, row_number, button_number):
-        table = self.driver.find_element_by_id(IndexModel.task_table_id)
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
         rows[row_number].find_elements_by_tag_name("a")[button_number].click()
 
     def _create_task(self, task_due_date):
-        self.e2e_utils.click_element_by_id(IndexModel.create_task_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            IndexModel.create_task_button_id)
 
         due_date_picker = self.e2e_utils.wait_and_get_element_by_id(
             CreateTaskModel.due_date_input_id)
@@ -159,7 +166,8 @@ class Tests():
         self.e2e_utils.send_keys_to_element_by_id(description_area_id,
                                                   test_task_description)
 
-        self.e2e_utils.click_element_by_id(CreateTaskModel.submit_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            CreateTaskModel.submit_button_id)
 
     def test_update_task(self):
         self.driver.get(server_url)
@@ -192,11 +200,11 @@ class Tests():
         self.e2e_utils.send_keys_to_element_by_id(due_date_id,
                                                   cur_date)
 
-        self.e2e_utils.click_element_by_id(UpdateTaskModel.submit_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            UpdateTaskModel.submit_button_id)
 
-        task_table_id = IndexModel.task_table_id
-
-        table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
@@ -219,7 +227,8 @@ class Tests():
 
         assert task_desc.text == test_task_description
 
-        self.e2e_utils.click_element_by_id(ConfirmFormModel.submit_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            ConfirmFormModel.submit_button_id)
 
     def test_delete_task(self):
         self.driver.get(server_url)
@@ -227,9 +236,8 @@ class Tests():
         self._create_task(date_utils.datepicker_date_from_today(20))
         self._create_task(date_utils.datepicker_date_from_today(20))
 
-        task_table_id = IndexModel.task_table_id
-
-        table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
@@ -239,9 +247,8 @@ class Tests():
 
         self._accept_confirm_form()
 
-        task_table_id = IndexModel.task_table_id
-
-        table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
@@ -252,9 +259,8 @@ class Tests():
 
         self._create_task(date_utils.datepicker_date_from_today(20))
 
-        task_table_id = IndexModel.task_table_id
-
-        table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        table = self.e2e_utils.wait_and_get_element_by_id(
+            IndexModel.task_table_id)
 
         rows = table.find_elements_by_tag_name("tr")
 
@@ -267,11 +273,11 @@ class Tests():
         with pytest.raises(NoSuchElementException):
             self.driver.find_element_by_id(IndexModel.task_table_id)
 
-        self.e2e_utils.click_element_by_id(IndexModel.show_completed_button_id)
+        self.e2e_utils.wait_and_click_element_by_id(
+            IndexModel.show_completed_button_id)
 
-        task_table_id = CompletedModel.task_table_id
-
-        comp_table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
+        comp_table = self.e2e_utils.wait_and_get_element_by_id(
+            CompletedModel.task_table_id)
 
         rows = comp_table.find_elements_by_tag_name("tr")
 

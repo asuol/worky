@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.by import By
 
 
 class E2eUtils():
@@ -20,7 +21,7 @@ class E2eUtils():
     def wait_and_get_element_by_id(self, elem_id):
         """
         wait for the given element id to appear before returning it (wait up to
-        10 seconds)
+        30 seconds)
 
         Parameters
         ----------
@@ -28,14 +29,14 @@ class E2eUtils():
         elem_id: str
             id of the element to be found
         """
-        wait = WebDriverWait(self.driver, 10)
+        wait = WebDriverWait(self.driver, 30)
 
-        return wait.until(ec.visibility_of(
-            self.driver.find_element_by_id(elem_id)))
+        return wait.until(ec.visibility_of_element_located((By.ID, elem_id)))
 
-    def click_element_by_id(self, elem_id):
+    def wait_and_click_element_by_id(self, elem_id):
         """
-        Click of the given element id
+        Wait for the given element id to be clickable and click on it (wait up
+        to 30 seconds)
 
         Parameters
         ----------
@@ -43,7 +44,9 @@ class E2eUtils():
         elem_id: str
             id of the element to be found
         """
-        element = self.driver.find_element_by_id(elem_id)
+        wait = WebDriverWait(self.driver, 30)
+
+        element = wait.until(ec.element_to_be_clickable((By.ID, elem_id)))
 
         element.click()
 
