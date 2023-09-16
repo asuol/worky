@@ -33,7 +33,9 @@ import sys
 
 DEPS_DIR = "worky_deps"
 
-LINUX64_PLATFORM = "manylinux1_x86_64"
+# PEP600: manylinux_${GLIBCMAJOR}_${GLIBCMINOR}_${ARCH}
+# Currently using PEP 599 below. To be replaced at some point by PEP600 above
+LINUX64_PLATFORM = "manylinux2014_x86_64"
 WIN_PLATFORM = "win_amd64"
 
 if sys.platform.startswith("linux"):
@@ -85,7 +87,7 @@ def package(platform):
     try:
         subprocess.check_call([sys.executable, '-m', 'pip', 'download', '-r',
                                'requirements.txt', '--platform', platform,
-                               '--python-version', '35',
+                               '--python-version', '311',
                                '--only-binary=:all:', '-d', DEPS_DIR])
 
         with tarfile.open(get_deps_tar_file(platform), "x:gz") as deps_tar:

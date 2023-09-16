@@ -48,7 +48,7 @@ Otherwise a tar ball is provided for linux64 and another for win64 in the reposi
 ```
 python3 build.py --offline-install-linux64
 ```
-which installs the dependencies at `worky_deps_manylinux1_x86_64.tar.gz` or
+which installs the dependencies at `worky_deps_manylinux2014_x86_64.tar.gz` or
 
 ```
 python3 build.py --offline-install-win64
@@ -133,7 +133,7 @@ To execute the unit and end-to-end tests and gather the code coverage metrics us
 If you do not have chrome installed you can also use the `selenium/standalone-chrome` docker image to accomplish the same thing:
 
 ```
-docker run -d --rm --name "worky-selenium" --network="host" selenium/standalone-chrome:latest
+docker run -d --rm --name "worky-selenium" --network="host" --shm-size=2g selenium/standalone-chrome:116.0
 python3 build.py --run-tests-remote
 docker stop worky-selenium
 ```
