@@ -85,7 +85,7 @@ class Storage():
         """
         self._due_date_format = '%Y-%m-%d'
 
-        if(not re.search(".*[a-zA-Z]\\w*\\.worky", db_path)):
+        if (not re.search(".*[a-zA-Z]\\w*\\.worky", db_path)):
             raise StorageException("Database name must start with a letter "
                                    "and end with .worky: %s" % db_path)
 
@@ -236,7 +236,7 @@ class Storage():
                         )
                        )
 
-            if(
+            if (
                 (
                     len(key["constrained_columns"])
                     !=
