@@ -25,8 +25,8 @@ SOFTWARE.
 import pytest
 from pytest_cov.embed import cleanup_on_sigterm
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from worky import server
 from worky.storage import Storage
 from multiprocessing import Process
@@ -82,14 +82,14 @@ def driver_init(request):
         chrome_driver = webdriver.Remote(
             command_executor='http://%s:4444/wd/hub' %
             (os.getenv("REMOTE_SELENIUM")),
-            desired_capabilities=DesiredCapabilities.CHROME)
+            options=webdriver.ChromeOptions())
 
     request.cls.driver = chrome_driver
     request.cls.e2e_utils = E2eUtils(chrome_driver)
 
     yield
 
-    chrome_driver.close()
+    chrome_driver.quit()
 
 
 @pytest.mark.usefixtures("deploy_server", "driver_init")
@@ -99,7 +99,7 @@ class Tests():
         self.driver.get(server_url)
 
         with pytest.raises(NoSuchElementException) as error:
-            self.driver.find_element_by_id(IndexModel.task_table_id)
+            self.driver.find_element(By.ID, IndexModel.task_table_id)
 
         assert error.type is NoSuchElementException
 
@@ -130,11 +130,11 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 2
 
-        first_row_columns = rows[1].find_elements_by_tag_name("td")
+        first_row_columns = rows[1].find_elements(By.TAG_NAME, "td")
 
         first_row_desc = first_row_columns[DESCRIPTION_COLUMN].text
 
@@ -144,9 +144,9 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
-        rows[row_number].find_elements_by_tag_name("a")[button_number].click()
+        rows[row_number].find_elements(By.TAG_NAME, "a")[button_number].click()
 
     def _create_task(self, task_due_date):
         self.e2e_utils.wait_and_click_element_by_id(
@@ -219,11 +219,11 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 2
 
-        first_row_columns = rows[1].find_elements_by_tag_name("td")
+        first_row_columns = rows[1].find_elements(By.TAG_NAME, "td")
 
         first_row_desc = first_row_columns[DESCRIPTION_COLUMN].text
 
@@ -252,7 +252,7 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 3
 
@@ -263,7 +263,7 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 2
 
@@ -275,7 +275,7 @@ class Tests():
         table = self.e2e_utils.wait_and_get_element_by_id(
             IndexModel.task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 2
 
@@ -284,7 +284,7 @@ class Tests():
         self._accept_confirm_form()
 
         with pytest.raises(NoSuchElementException):
-            self.driver.find_element_by_id(IndexModel.task_table_id)
+            self.driver.find_element(By.ID, IndexModel.task_table_id)
 
         self.e2e_utils.wait_and_click_element_by_id(
             IndexModel.show_completed_button_id)
@@ -292,7 +292,7 @@ class Tests():
         comp_table = self.e2e_utils.wait_and_get_element_by_id(
             CompletedModel.task_table_id)
 
-        rows = comp_table.find_elements_by_tag_name("tr")
+        rows = comp_table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 2
 
@@ -310,11 +310,11 @@ class Tests():
 
         table = self.e2e_utils.wait_and_get_element_by_id(task_table_id)
 
-        rows = table.find_elements_by_tag_name("tr")
+        rows = table.find_elements(By.TAG_NAME, "tr")
 
         assert len(rows) == 7
 
-        first_row_columns = rows[1].find_elements_by_tag_name("td")
+        first_row_columns = rows[1].find_elements(By.TAG_NAME, "td")
 
         prev_task_due_date = first_row_columns[DUE_DATE_COLUMN]
 
@@ -323,7 +323,7 @@ class Tests():
         assert bg_color == red_rgba
 
         for task in rows[2:]:
-            row_columns = task.find_elements_by_tag_name("td")
+            row_columns = task.find_elements(By.TAG_NAME, "td")
 
             assert row_columns[DUE_DATE_COLUMN].text > prev_task_due_date.text
 
