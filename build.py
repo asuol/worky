@@ -97,7 +97,8 @@ def package(platform):
 
 
 def _run_tests():
-    subprocess.check_call(['pytest', '--cov=worky', '--cov-report=term',
+    subprocess.check_call(['pytest', '--cov-config=coveragerc', '--cov=worky',
+                           '--cov-report=term',
                            '--cov-report=xml:coverage_report.xml',
                            '-o', 'junit_family=xunit2',
                            '--junitxml=test_reports.xml', 'tests'])
