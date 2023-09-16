@@ -41,7 +41,9 @@ import os
 
 host_ip = os.getenv("SERVER_IP", "127.0.0.1")
 
-server_url = "http://%s:5000" % host_ip
+port = 32000
+
+server_url = f"http://{host_ip}:{port}"
 
 test_task_description = "Sample task"
 
@@ -61,7 +63,7 @@ def deploy_server(tmpdir):
 
     server.app.config['STORAGE'] = Storage(db_path)
     server_process = Process(target=server.app.run,
-                             args=(host_ip,))
+                             args=(host_ip, port))
 
     cleanup_on_sigterm()
 
