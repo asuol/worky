@@ -25,6 +25,9 @@ test:
     - python build.py --run-tests-ci
 
   artifacts:
+    paths:
+      - test_reports.xml
+      - coverage_report.xml
     reports:
         junit: test_reports.xml
         coverage_report:
