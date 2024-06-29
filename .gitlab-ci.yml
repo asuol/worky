@@ -33,3 +33,6 @@ test:
         coverage_report:
           coverage_format: cobertura
           path: coverage_report.xml
+
+  # Regex to search the job log for the pytest-cov coverage result
+  coverage: '/TOTAL +[1-9]+ + [1-9]+ +([1-9]+\%)$/'
