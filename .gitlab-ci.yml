@@ -19,7 +19,7 @@ test:
 
   script:
     - python build.py --lint
-    - export SERVER_IP=$(cat /etc/hosts | grep "$(hostname)$" | awk '{print $1}')
+    - export SERVER_IP=$(cat /etc/hosts | grep "$(hostname)$" | head -n 1 | awk '{print $1}')
     - cat /etc/hosts
     - echo "SERVER_IP is ${SERVER_IP}"
     - python build.py --run-tests-ci
