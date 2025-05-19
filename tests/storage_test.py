@@ -24,7 +24,7 @@ SOFTWARE.
 
 from worky.storage import Storage
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 due_date_format = '%Y-%m-%d'
 
@@ -39,7 +39,7 @@ def _setup(tmpdir):
 def _create_active_task(storage):
     description = "sample task"
 
-    due_date = datetime.utcnow() + timedelta(days=1)
+    due_date = datetime.now(UTC) + timedelta(days=1)
     due_date = due_date.strftime(due_date_format)
 
     storage.create_task(description, due_date)
@@ -59,7 +59,7 @@ def _create_active_task(storage):
 def _create_overdue_task(storage):
     description = "sample task"
 
-    due_date = datetime.utcnow() - timedelta(days=1)
+    due_date = datetime.now(UTC) - timedelta(days=1)
     due_date = due_date.strftime(due_date_format)
 
     storage.create_task(description, due_date)
@@ -90,7 +90,7 @@ def _complete_task(storage, description, due_date, task):
 
     t1_completed_by = completed_task[1].completed_by.strftime(due_date_format)
 
-    assert t1_completed_by == datetime.utcnow().strftime(due_date_format)
+    assert t1_completed_by == datetime.now(UTC).strftime(due_date_format)
 
     return completed_task
 

@@ -87,7 +87,7 @@ def package(platform):
     try:
         subprocess.check_call([sys.executable, '-m', 'pip', 'download', '-r',
                                'requirements.txt', '--platform', platform,
-                               '--python-version', '311',
+                               '--python-version', '313',
                                '--only-binary=:all:', '-d', DEPS_DIR])
 
         with tarfile.open(get_deps_tar_file(platform), "x:gz") as deps_tar:

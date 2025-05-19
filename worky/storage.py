@@ -27,7 +27,7 @@ from sqlalchemy.orm import declarative_base
 import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
-from datetime import datetime
+from datetime import datetime, UTC
 import logging
 import re
 from sqlalchemy.exc import OperationalError
@@ -286,10 +286,10 @@ class Storage():
                 raise StorageException(error_msg)
 
     def _today(self):
-        return datetime.utcnow().strftime(self._due_date_format)
+        return datetime.now(UTC).strftime(self._due_date_format)
 
     def _current_date_time(self):
-        return datetime.utcnow().replace(microsecond=0)
+        return datetime.now(UTC).replace(microsecond=0)
 
     @contextmanager
     def _session_scope(self):

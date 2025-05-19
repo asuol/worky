@@ -24,7 +24,7 @@ SOFTWARE.
 
 from flask import Flask, request, redirect
 from flask.templating import render_template
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from worky.models.index_model import IndexModel
 from worky.models.completed_model import CompletedModel
 from worky.models.create_task_model import CreateTaskModel
@@ -56,7 +56,7 @@ def index():
 @app.route('/createForm')
 def create_form():
 
-    default_due_date = datetime.utcnow() + timedelta(weeks=2)
+    default_due_date = datetime.now(UTC) + timedelta(weeks=2)
     default_due_date = datetime.strftime(default_due_date, '%Y-%m-%d')
 
     create_task_model = CreateTaskModel("/createTask", default_due_date)

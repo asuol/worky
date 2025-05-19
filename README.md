@@ -133,7 +133,7 @@ To execute the unit and end-to-end tests and gather the code coverage metrics us
 If you do not have chrome installed you can also use the `selenium/standalone-chrome` docker image to accomplish the same thing:
 
 ```
-docker run -d --rm --name "worky-selenium" --network="host" --shm-size=2g selenium/standalone-chrome:116.0
+docker run -d --rm --name "worky-selenium" --network="host" --shm-size=2g selenium/standalone-chrome:133.0-20250505
 python3 build.py --run-tests-remote
 docker stop worky-selenium
 ```
