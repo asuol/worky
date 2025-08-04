@@ -1,9 +1,9 @@
-flake8==7.2.0
+flake8==7.3.0
 Flask==3.1.1
 Jinja2==3.1.6
-pytest==8.3.5
+pytest==8.4.1
 # Upgrading pytest_cov above 5.0.0 causes coverage data to not be fully gathered from multiprocess.Process
 pytest_cov==5.0.0
-SQLAlchemy==2.0.41
-selenium==4.32.0
+SQLAlchemy==2.0.42
+selenium==4.34.2
 waitress==3.0.2

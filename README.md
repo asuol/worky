@@ -55,7 +55,7 @@ python3 build.py --offline-install-win64
 ```
 which installs the dependencies at `worky_deps_win_amd64.tar.gz`.
 
-These were created by running the followig commands, respectively:
+These were created by running the following commands, respectively:
 
 ```
 python3 build.py --package-linux64
@@ -133,7 +133,7 @@ To execute the unit and end-to-end tests and gather the code coverage metrics us
 If you do not have chrome installed you can also use the `selenium/standalone-chrome` docker image to accomplish the same thing:
 
 ```
-docker run -d --rm --name "worky-selenium" --network="host" --shm-size=2g selenium/standalone-chrome:133.0-20250505
+docker run -d --rm --name "worky-selenium" --network="host" --shm-size=2g selenium/standalone-chrome:138.0-20250727
 python3 build.py --run-tests-remote
 docker stop worky-selenium
 ```
@@ -142,8 +142,8 @@ To lint the code run `python3 build.py --lint`
 
 ## TODO
 
-TODO loop!! This is the section where tasks that need to be done are shown so tasks to be done can be shown.
-At this time no changes are envisaged. 
-Potential future updates may include:
+TODO loop!! This is the section where tasks that need to be done are shown so tasks to be done can be shown:
+
 - Show the update history for each task
+- Upgrading pytest_cov above 5.0.0 causes coverage data to not be fully gathered from multiprocess.Process, as builtin multiprocessing support was dropped (https://pytest-cov.readthedocs.io/en/latest/subprocess-support.html#if-you-use-multiprocessing)
 
